@@ -111,7 +111,7 @@ ob_end_flush();
                         <label for="pdp" class="col-md-4 form-label fw-bold" style="text-align: left;">Photo de
                             profil</label>
                         <input type="file" name="pdp" id="nouvel_pdp" class="col-md-4 form-label fw-bold"
-                            accept="image/*">
+                            accept="image/*" disabled>
                     </div>
                     <p class=" fs-5 informations" style="display:none;"><strong>Nom :</strong> <?= $donne['nom'] ?></p>
                     <p class="fs-5 informations" style="display:none;"><strong>Prénom :</strong>

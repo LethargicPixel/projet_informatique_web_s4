@@ -48,10 +48,3 @@ document.getElementById("modification").addEventListener(
   },
   { once: true }
 );
-document.getElementById("nouvel_pdp").addEventListener("change", function () {
-  const file = this.files[0];
-  if (file && file.size > 2 * 1024 * 1024) {
-    alert("L'image est trop lourde. Maximum 2 Mo.");
-    this.value = "";
-  }
-});
