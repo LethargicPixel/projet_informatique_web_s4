@@ -46,6 +46,7 @@ if ($_SESSION['connecter']) {
     $pdp = $bdd->prepare("SELECT pdp FROM profils WHERE mail=?");
     $pdp->execute([$_SESSION['mail']]);
     $pdp = $pdp->fetch(PDO::FETCH_ASSOC);
+    print_r($pdp);
     $pdp = $pdp ? $pdp['pdp'] : null;
 
 

@@ -7,16 +7,19 @@ $donne = $donne->fetch(PDO::FETCH_ASSOC);
 
 
 
-
+ob_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+
+
     if (isset($_POST["profil"]) && $_POST["profil"] === "deconnexion") {
-        echo "<script>alert('Vous avez été déconnecté avec succès');</script>";
+        echo "<script>alert('Vous avez été déconnecté avec succès');
+        window.location.href = '?page=accueil';
+        </script>";
 
         session_unset();
-        header('Location: ?page=accueil');
         exit;
     } else if (isset($_POST["profil"]) && $_POST["profil"] === "modification") {
 
@@ -29,8 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $code_postal = $_POST['code_postal'];
         $ville = $_POST['ville'];
         $pays = $_POST['pays'];
-        $motdepasse = isset($_POST['mots_de passe']) ? $_POST['mots_de passe'] : null;
-        $pdp = $pdp ? file_get_contents($_POST['nouvel_pdp']) : null;
+        $motdepasse = isset($_POST['mots_de_passe']) ? $_POST['mots_de_passe'] : null;
+
+
+        $pdp = isset($_FILES['pdp']) && $_FILES['pdp']['error'] === 0 ? file_get_contents($_FILES['pdp']['tmp_name']) : $donne['pdp'];
+
 
         $existe = $bdd->prepare("SELECT mail,mdp FROM profils WHERE mail=?");
         $existe->execute([$email]);
@@ -48,16 +54,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $modifier->execute([$nom, $prenom, $telephone, $adresse, $complement, $code_postal, $ville, $pays, $pdp, $email]);
 
-            header('Location: ?page=acceuil');
-            echo "<script>alert('Votre profil a été modifié avec succès');</script>";
+
+            echo "<script>alert('Votre profil a été modifié avec succès');
+            window.location.href = '?page=acceuil';
+            </script>";
+
             exit;
         } else {
-            $_SESSION['erreur_connexion'] = true;
-        }
-        exit;
-    }
-}
 
+            echo "<script>alert('Le mot de passe est incorrect, les données n\'ont pas été modifié');
+            window.location.href = '?page=profil';
+            </script>";
+
+            exit;
+        }
+
+    }
+
+}
+ob_end_flush();
 
 ?>
 
@@ -78,7 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container mt-5">
         <div class="card shadow-lg rounded-3">
             <div class="card-body text-center">
-                <form method="post">
+
+                <form method="post" enctype="multipart/form-data">
                     <h1 class="card-title text-success mb-4"><?= $donne['prenom'] . " " . $donne['nom'] ?></h1>
 
                     <?php if ($donne['pdp']) { ?>
@@ -104,20 +120,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <p class="fs-5 informations"><strong>Téléphone :</strong> <?= $donne['numero'] ?></p>
                     <p class="fs-5 informations"><strong>Adresse :</strong> <?= $donne['adresse'] ?></p>
-                    <?php if ($donne['complement_adresse']) { ?>
-                        <p class="fs-5 informations"><strong>Complément d'adresse :</strong>
-                            <?= $donne['complement_adresse'] ?></p>
-                    <?php } ?>
+
+                    <p class="fs-5 informations" <?= isset($donne['complement_adresse']) ? '' : 'style=display:none;' ?>>
+                        <strong>Complément d'adresse
+                            :</strong>
+                        <?= $donne['complement_adresse'] ?>
+                    </p>
+
+
+
                     <p class="fs-5 informations"><strong>Code postal :</strong> <?= $donne['code_postal'] ?></p>
                     <p class="fs-5 informations"><strong>Ville :</strong> <?= $donne['ville'] ?></p>
                     <p class="fs-5 informations"><strong>Pays :</strong> <?= $donne['pays'] ?></p>
                     <p class="fs-5 informations" style="display: none;"><strong>Mots de passe :</strong></p>
 
 
-                    <button type="button" name="profil" value="modification" id="modification"
+                    <button type="submit" name="profil" value="modification" id="modification"
                         class="btn btn-success w-100 mt-3">Modifier</button>
 
-                    <button type="submit" name="profil" value="deconnexion" class="btn btn-danger w-100 mt-3">Se
+                    <button type="submit" name="profil" value="deconnexion" class="btn btn-danger w-100 mt-3"
+                        id="deconnexion">Se
                         déconnecter</button>
                 </form>
             </div>
