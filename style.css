@@ -1,0 +1,22 @@
+a {
+  text-decoration: none;
+  border-radius: 0;
+}
+
+a:hover {
+  color: #000;
+}
+
+.active {
+  color: #fff;
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn {
+  border-radius: 0px;
+}
+
+#pdp {
+  height: 38px;
+}
