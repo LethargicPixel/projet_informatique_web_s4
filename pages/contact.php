@@ -24,7 +24,7 @@ $coachs = $bdd->query("SELECT * FROM coachs")->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <form action="mailto:sportify@mail" method="post" enctype="text/plain">
+    <form action="mailto:sportify@mail.com" method="post" enctype="text/plain">
 
         <div class="container">
             <h1>Contactez-nous</h1>
