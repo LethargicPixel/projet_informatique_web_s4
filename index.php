@@ -108,7 +108,6 @@ if ($_SESSION['connecter']) {
     <div class="text-center text-white p-3">
         <p><a class="text-white" href="?page=contact">contact</a></p>
         <p>© 2025 Sportify. Tous droits réservés.</p>
-        <p>Mentions légales | Politique de confidentialité</p>
         <p>Lopes Mathéo</p>
     </div>
 
