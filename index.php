@@ -63,7 +63,7 @@ if ($_SESSION['connecter']) {
     <link rel="stylesheet" href="bootstrap-5.0.2-dist\css\bootstrap.css">
     <link rel="stylesheet" href="bootstrap-5.0.2-dist\css\bootstrap-utilities.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+    <link rel="icon" href="profil.png" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="style.css">
     <title>Sportify</title>
 </head>
@@ -100,10 +100,12 @@ if ($_SESSION['connecter']) {
 
         </nav>
     </header>
+    <div class="container mt-4">
+        <?php include "pages/" . $pages[$page]; ?>
+    </div>
 </body>
-<div class="container mt-4">
-    <?php include "pages/" . $pages[$page]; ?>
-</div>
+
+
 <footer class="bg-success d-flex align-items-center justify-content-center">
     <div class="text-center text-white p-3">
         <p><a class="text-white" href="?page=contact">contact</a></p>

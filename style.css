@@ -20,3 +20,7 @@ a:hover {
 #pdp {
   height: 38px;
 }
+
+nav {
+  position: sticky;
+}
